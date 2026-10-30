@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Coca Machucada · Tienda</title>
+<link href="https://fonts.googleapis.com/css2?family=Bree+Serif&family=Nunito:wght@400;600;800&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f3efe2;--surface:#fffdf6;--ink:#1f2a1c;--muted:#5d6b55;--green:#2f6b3a;--green-d:#1f4a27;--red:#b3262e;--gold:#e0a800;--line:#d9d2bb;--on-green:#fffdf6;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);color-scheme:light}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#141a12;--surface:#1d261a;--ink:#f0ecdc;--muted:#a9b79f;--green:#6fbf7d;--green-d:#8fd49b;--red:#ff7a80;--gold:#f2c230;--line:#33412f;--on-green:#10200f;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#141a12;--surface:#1d261a;--ink:#f0ecdc;--muted:#a9b79f;--green:#6fbf7d;--green-d:#8fd49b;--red:#ff7a80;--gold:#f2c230;--line:#33412f;--on-green:#10200f;color-scheme:dark}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:400 1rem/1.5 Nunito,system-ui,sans-serif}
+h1,h2,h3{font-family:"Bree Serif",Georgia,serif;font-weight:400;margin:0}
+button,input,textarea{font:inherit;color:inherit}
+button{cursor:pointer}
+:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
+.aguayo{height:14px;background:repeating-linear-gradient(90deg,var(--red) 0 28px,var(--gold) 28px 40px,var(--green) 40px 76px,#2a1a3a 76px 88px,var(--gold) 88px 100px)}
+header.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--surface);border-bottom:1px solid var(--line)}
+.bar{max-width:1100px;margin:0 auto;padding:.7rem 1rem;display:flex;align-items:center;gap:.8rem;flex-wrap:wrap}
+.brand{font-family:"Bree Serif",Georgia,serif;font-size:1.4rem;color:var(--green-d);flex:1;min-width:150px}
+.tabs{display:flex;gap:.3rem}
+.tab{border:1px solid var(--line);background:transparent;padding:.45rem .9rem;border-radius:999px;font-weight:600}
+.tab[aria-selected="true"]{background:var(--green);color:var(--on-green);border-color:var(--green)}
+.cartbtn{background:var(--red);color:#fff;border:0;padding:.5rem 1rem;border-radius:999px;font-weight:800}
+main{max-width:1100px;margin:0 auto;padding:1.2rem 1rem 4rem}
+.hero{padding:1.4rem 0 .6rem}
+.hero h1{font-size:clamp(2rem,6vw,3.4rem);line-height:1.1;color:var(--green-d);max-width:14em}
+.hero p{max-width:34em;color:var(--muted);margin:.6rem 0 0}
+.chips{display:flex;gap:.5rem;flex-wrap:wrap;margin:1.2rem 0}
+.chip{border:2px solid var(--green);background:transparent;color:var(--green-d);padding:.35rem .9rem;border-radius:8px;font-weight:700}
+.chip[aria-pressed="true"]{background:var(--green);color:var(--on-green)}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:1rem}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:1rem;display:flex;flex-direction:column;gap:.4rem}
+.ico{font-size:2.6rem;line-height:1}
+.card h3{font-size:1.2rem}
+.card p{margin:0;color:var(--muted);font-size:.93rem;flex:1}
+.row{display:flex;align-items:center;justify-content:space-between;gap:.5rem;margin-top:.4rem}
+.price{font-weight:800;font-size:1.15rem}
+.btn{background:var(--green);color:var(--on-green);border:0;padding:.55rem 1rem;border-radius:10px;font-weight:800}
+.btn.sec{background:transparent;color:var(--ink);border:1px solid var(--line)}
+.btn.danger{background:var(--red);color:#fff}
+.overlay{position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:20;display:none}
+.overlay.open{display:block}
+.drawer{position:fixed;top:0;right:0;bottom:0;width:min(420px,100%);background:var(--surface);z-index:21;transform:translateX(100%);transition:transform .25s;display:flex;flex-direction:column;padding:calc(1rem + env(safe-area-inset-top,0px)) 1rem calc(1rem + env(safe-area-inset-bottom,0px))}
+.drawer.open{transform:none}
+.drawer .head{display:flex;justify-content:space-between;align-items:center;margin-bottom:.6rem}
+.scroll{overflow-y:auto;flex:1}
+.item{display:flex;gap:.6rem;align-items:center;padding:.6rem 0;border-bottom:1px solid var(--line)}
+.item .n{flex:1}
+.item small{color:var(--muted);display:block}
+.qty{display:flex;align-items:center;gap:.3rem}
+.qty button{width:2rem;height:2rem;border-radius:8px;border:1px solid var(--line);background:transparent;font-weight:800}
+.total{display:flex;justify-content:space-between;font-weight:800;font-size:1.2rem;margin:.8rem 0}
+label{display:block;font-weight:600;font-size:.9rem;margin-top:.5rem}
+input,textarea{width:100%;padding:.55rem .7rem;border:1px solid var(--line);border-radius:8px;background:var(--bg)}
+.empty{color:var(--muted);padding:1.5rem 0;text-align:center}
+.tablewrap{overflow-x:auto}
+table{border-collapse:collapse;width:100%;min-width:560px;background:var(--surface)}
+th,td{text-align:left;padding:.6rem .7rem;border-bottom:1px solid var(--line);vertical-align:top;font-size:.93rem}
+th{background:var(--bg)}
+.sub{display:flex;gap:.5rem;margin:1rem 0;flex-wrap:wrap}
+textarea.json{min-height:220px;font-family:ui-monospace,Menlo,monospace;font-size:.8rem}
+.toast{position:fixed;left:50%;bottom:calc(1.2rem + env(safe-area-inset-bottom,0px));transform:translateX(-50%) translateY(150%);background:var(--green-d);color:var(--on-green);padding:.7rem 1.1rem;border-radius:10px;z-index:30;transition:transform .25s;max-width:90%}
+.toast.show{transform:translateX(-50%)}
+.drawer.sent .scroll,.drawer.sent .total,.drawer.sent form{display:none}
+.drawer:not(.sent) #done{display:none}
+.wa{display:block;text-align:center;text-decoration:none;background:#1e9e4a;color:#fff;padding:.9rem;border-radius:10px;font-weight:800;margin:1rem 0 .6rem}
+[hidden]{display:none!important}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<div class="aguayo"></div>
+<header class="top"><div class="bar">
+  <div class="brand">🌿 Coca Machucada</div>
+  <div class="tabs" role="tablist">
+    <button class="tab" role="tab" id="tab-shop" aria-selected="true">Tienda</button>
+    <button class="tab" role="tab" id="tab-data" aria-selected="false">Registros</button>
+  </div>
+  <button class="cartbtn" id="openCart">Carrito (<span id="count">0</span>)</button>
+</div></header>
+
+<main>
+<section id="shop">
+  <div class="hero">
+    <h1>Hoja de coca molida, como se prepara en casa</h1>
+    <p>Bebidas machucadas en varios sabores. Elige, agrega al carrito y registra tu pedido.</p>
+  </div>
+  <div class="chips" id="chips" role="group" aria-label="Filtrar por categoría"></div>
+  <div class="grid" id="grid"></div>
+</section>
+
+<section id="data" hidden>
+  <h2>Registros guardados</h2>
+  <p style="color:var(--muted)">Los pedidos y clientes se guardan en este navegador. Si borras los datos del navegador, se pierden.</p>
+  <div class="sub">
+    <button class="btn" id="showOrders">Pedidos (<span id="oc">0</span>)</button>
+    <button class="btn sec" id="showCust">Clientes (<span id="cc">0</span>)</button>
+    <button class="btn sec" id="wipe">Borrar todo</button>
+  </div>
+  <div id="dataOut"></div>
+</section>
+</main>
+
+<div class="overlay" id="ov"></div>
+<aside class="drawer" id="drawer" aria-label="Carrito">
+  <div class="head"><h2>Tu carrito</h2><button class="btn sec" id="closeCart">Cerrar</button></div>
+  <div class="scroll" id="cartList"></div>
+  <div class="total"><span>Total</span><span id="total">Bs 0</span></div>
+  <form id="form" autocomplete="on">
+    <label for="fn">Nombre y apellido (solo letras)</label><input id="fn" required autocomplete="name" maxlength="60" placeholder="Ej: María Quispe"><small id="fnErr" style="color:var(--red);font-weight:600" hidden>Escribe un nombre y apellido válidos, solo con letras.</small>
+    <label for="ft">Teléfono (solo números)</label><input id="ft" type="tel" inputmode="numeric" maxlength="12" required autocomplete="tel" placeholder="Ej: 71234567"><small id="ftErr" style="color:var(--red);font-weight:600" hidden>Escribe solo números, mínimo 7 dígitos.</small>
+    <label for="fa">Dirección de entrega</label><input id="fa" required placeholder="Ej: Calle Bolívar #12, Santivañez"><small id="faErr" style="color:var(--red);font-weight:600" hidden>Solo entregamos en Santivañez. Escribe “Santivañez” en la dirección.</small>
+    <label for="fo">Notas (opcional)</label><textarea id="fo" rows="2"></textarea>
+    <button class="btn" style="width:100%;margin-top:.8rem" type="submit">Confirmar pedido</button>
+  </form>
+  <div id="done"><h2>¡Pedido registrado!</h2><p>Último paso: envíalo por WhatsApp para que lo recibamos. Si no se abrió solo, toca el botón verde.</p><a class="wa" id="waLink" href="#" target="_blank" rel="noopener">Enviar pedido por WhatsApp</a><button class="btn sec" id="keep" style="width:100%">Seguir comprando</button></div>
+</aside>
+<div class="toast" id="toast" role="status"></div>
+
+<script>
+const PRODUCTS=[
+ {id:11,cat:"Bebidas",ico:"🌿",name:"Coca normal",desc:"Coca machucada clásica, sin sabores añadidos.",price:18},
+ {id:12,cat:"Bebidas",ico:"🍃",name:"Coca hojeada",desc:"Coca machucada con hoja más natural, para quien la prefiere sin mezclas.",price:20},
+ {id:1,cat:"Bebidas",ico:"🍹",name:"Sabor maracuyá",desc:"Coca machucada con pulpa de maracuyá, dulce y tropical.",price:22},
+ {id:2,cat:"Bebidas",ico:"🍌",name:"Sabor plátano",desc:"Coca machucada licuada con plátano maduro, suave y cremosa.",price:22},
+ {id:3,cat:"Bebidas",ico:"🍉",name:"Sabor sandía",desc:"Coca machucada con sandía fresca y mucho hielo.",price:22},
+ {id:4,cat:"Bebidas",ico:"☕",name:"Sabor café",desc:"Coca machucada con café fuerte, fría o tibia.",price:24},
+ {id:5,cat:"Bebidas",ico:"⚡",name:"Sabor Red Bull",desc:"Coca machucada licuada con Red Bull bien helado.",price:28},
+ {id:6,cat:"Bebidas",ico:"🫧",name:"Sabor chicle",desc:"Coca machucada dulce con sabor a chicle, la favorita de los jóvenes.",price:22},
+ {id:7,cat:"Bebidas",ico:"🥭",name:"Sabor mango",desc:"Coca machucada con mango maduro y un toque de limón.",price:22},
+ {id:8,cat:"Bebidas",ico:"🍫",name:"Sabor chocolate",desc:"Coca machucada con cacao y leche, espesa y dulce.",price:24},
+ {id:9,cat:"Bebidas",ico:"🥛",name:"Sabor yogurt",desc:"Coca machucada con yogurt natural, cremosa y fresca.",price:22},
+ {id:10,cat:"Bebidas",ico:"🫐",name:"Sabor mora",desc:"Coca machucada con mora molida, ácida y dulce.",price:22},
+];
+const CATS=["Todos",...new Set(PRODUCTS.map(p=>p.cat))];
+const $=s=>document.querySelector(s);
+const store={get(k,d){try{const v=localStorage.getItem(k);return v?JSON.parse(v):d}catch(e){return d}},set(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}};
+let cart=store.get("cm_cart2",{}),orders=store.get("cm_orders",[]),customers=store.get("cm_customers",[]);
+Object.keys(cart).forEach(k=>{if(!PRODUCTS.some(p=>p.id==k)||!(cart[k]>0))delete cart[k]});
+let cat="Todos",view="orders",wipeArm=false;
+const bs=n=>"Bs "+n.toFixed(2).replace(/\.00$/,"");
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+function toast(t){const e=$("#toast");e.textContent=t;e.classList.add("show");clearTimeout(toast.t);toast.t=setTimeout(()=>e.classList.remove("show"),2500)}
+function renderChips(){$("#chips").hidden=CATS.length<=2;$("#chips").innerHTML=CATS.map(c=>`<button class="chip" data-c="${c}" aria-pressed="${c===cat}">${c}</button>`).join("")}
+function renderGrid(){$("#grid").innerHTML=PRODUCTS.filter(p=>cat==="Todos"||p.cat===cat).map(p=>`<article class="card"><div class="ico">${p.ico}</div><h3>${p.name}</h3><p>${p.desc}</p><div class="row"><span class="price">${bs(p.price)}</span><button class="btn" data-add="${p.id}">Añadir</button></div></article>`).join("")}
+function renderCart(){
+  const ids=Object.keys(cart);let total=0,count=0;
+  $("#cartList").innerHTML=ids.length?ids.map(id=>{const p=PRODUCTS.find(x=>x.id==id),q=cart[id];total+=p.price*q;count+=q;
+    return `<div class="item"><span class="ico" style="font-size:1.8rem">${p.ico}</span><div class="n">${p.name}<small>${bs(p.price)} c/u</small></div><div class="qty"><button data-dec="${id}" aria-label="Quitar uno">−</button><b>${q}</b><button data-inc="${id}" aria-label="Agregar uno">+</button></div></div>`}).join(""):`<div class="empty">Tu carrito está vacío. Agrega productos desde la tienda.</div>`;
+  $("#total").textContent=bs(total);$("#count").textContent=count;$("#form").hidden=!ids.length;
+  store.set("cm_cart2",cart);
+}
+function setQty(id,d){cart[id]=(cart[id]||0)+d;if(cart[id]<=0)delete cart[id];renderCart()}
+function openCart(o){if(o)$("#drawer").classList.remove("sent");$("#drawer").classList.toggle("open",o);$("#ov").classList.toggle("open",o)}
+function renderData(){
+  $("#oc").textContent=orders.length;$("#cc").textContent=customers.length;
+  const out=$("#dataOut");
+  if(view==="json"){out.innerHTML=`<textarea class="json" readonly>${esc(JSON.stringify({clientes:customers,pedidos:orders},null,2))}</textarea>`;return}
+  if(view==="cust"){out.innerHTML=customers.length?`<div class="tablewrap"><table><tr><th>Nombre</th><th>Teléfono</th><th>Dirección</th><th>Pedidos</th></tr>${customers.map(c=>`<tr><td>${esc(c.name)}</td><td>${esc(c.phone)}</td><td>${esc(c.address)}</td><td>${c.orders}</td></tr>`).join("")}</table></div>`:`<div class="empty">Aún no hay clientes registrados.</div>`;return}
+  out.innerHTML=orders.length?`<div class="tablewrap"><table><tr><th>N.º</th><th>Fecha</th><th>Cliente</th><th>Productos</th><th>Total</th></tr>${orders.slice().reverse().map(o=>`<tr><td>#${o.id}</td><td>${esc(o.date)}</td><td>${esc(o.name)}<br><small>${esc(o.phone)}</small></td><td>${o.items.map(i=>`${i.q}× ${esc(i.name)}`).join("<br>")}${o.note?`<br><small>Nota: ${esc(o.note)}</small>`:""}</td><td><b>${bs(o.total)}</b></td></tr>`).join("")}</table></div>`:`<div class="empty">Aún no hay pedidos. Confirma uno desde el carrito.</div>`;
+}
+function showTab(t){const shop=t==="shop";$("#shop").hidden=!shop;$("#data").hidden=shop;$("#tab-shop").setAttribute("aria-selected",shop);$("#tab-data").setAttribute("aria-selected",!shop);if(!shop)renderData()}
+
+$("#chips").onclick=e=>{const c=e.target.dataset.c;if(c){cat=c;renderChips();renderGrid()}};
+$("#grid").onclick=e=>{const b=e.target.closest("[data-add]");if(b){setQty(b.dataset.add,1);toast("Añadido: "+PRODUCTS.find(p=>p.id==b.dataset.add).name)}};
+$("#cartList").onclick=e=>{if(e.target.dataset.inc)setQty(e.target.dataset.inc,1);if(e.target.dataset.dec)setQty(e.target.dataset.dec,-1)};
+$("#openCart").onclick=()=>openCart(true);$("#closeCart").onclick=$("#ov").onclick=()=>openCart(false);
+$("#tab-shop").onclick=()=>showTab("shop");$("#tab-data").onclick=()=>showTab("data");
+$("#showOrders").onclick=()=>{view="orders";renderData()};$("#showCust").onclick=()=>{view="cust";renderData()};
+$("#wipe").onclick=e=>{if(!wipeArm){wipeArm=true;e.target.textContent="¿Seguro? Toca otra vez";setTimeout(()=>{wipeArm=false;e.target.textContent="Borrar todo"},3500);return}
+  orders=[];customers=[];store.set("cm_orders",orders);store.set("cm_customers",customers);wipeArm=false;e.target.textContent="Borrar todo";renderData();toast("Registros borrados")};
+$("#form").onsubmit=e=>{e.preventDefault();
+  const items=Object.keys(cart).map(id=>{const p=PRODUCTS.find(x=>x.id==id);return{name:p.name,q:cart[id],price:p.price}});
+  if(!items.length)return;
+  const name=$("#fn").value.trim().replace(/\s+/g," "),phone=$("#ft").value.trim(),address=$("#fa").value.trim(),note=$("#fo").value.trim();
+  const aOk=/santivanez/i.test(address.normalize("NFD").replace(/[\u0300-\u036f]/g,"")),nOk=NAME_RE.test(name),pOk=/^\d{7,12}$/.test(phone);
+  $("#fnErr").hidden=nOk;$("#ftErr").hidden=pOk;$("#faErr").hidden=aOk;
+  if(!(nOk&&pOk&&aOk)){(!nOk?$("#fn"):!pOk?$("#ft"):$("#fa")).focus();return}
+  const order={id:(orders.length?orders[orders.length-1].id:0)+1,date:new Date().toLocaleString("es-BO"),name,phone,address,note,items,total:items.reduce((s,i)=>s+i.q*i.price,0)};
+  orders.push(order);
+  let c=customers.find(x=>x.phone===phone);
+  if(c){c.name=name;c.address=address;c.orders++}else customers.push({name,phone,address,orders:1});
+  store.set("cm_orders",orders);store.set("cm_customers",customers);
+  const url=waUrl(order);$("#waLink").href=url;
+  cart={};e.target.reset();renderCart();$("#drawer").classList.add("sent");
+  try{window.open(url,"_blank","noopener")}catch(err){}
+  toast("Pedido #"+order.id+" registrado");
+};
+const NAME_RE=/^\p{L}{2,}(?:['’-]\p{L}+)*(?: \p{L}{2,}(?:['’-]\p{L}+)*)+$/u;
+$("#fn").addEventListener("input",e=>{e.target.value=e.target.value.replace(/[^\p{L} '’-]/gu,"");$("#fnErr").hidden=true});
+$("#ft").addEventListener("input",e=>{e.target.value=e.target.value.replace(/\D/g,"");$("#ftErr").hidden=true});
+$("#fa").addEventListener("input",()=>{$("#faErr").hidden=true});
+const WA="59163978313";
+function waUrl(o){const L=o.items.map(i=>"- "+i.q+"× "+i.name+" ("+bs(i.q*i.price)+")").join("\n");
+  const t="Hola, quiero hacer este pedido (N.º "+o.id+"):\n"+L+"\nTotal: "+bs(o.total)+"\nNombre: "+o.name+"\nTeléfono: "+o.phone+"\nDirección: "+o.address+(o.note?"\nNotas: "+o.note:"");
+  return "https://wa.me/"+WA+"?text="+encodeURIComponent(t)}
+$("#keep").onclick=()=>openCart(false);
+renderChips();renderGrid();renderCart();
+</script>
+</body>
+</html>
